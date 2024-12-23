@@ -1,0 +1,104 @@
+# using the super key
+set $mod Mod4
+
+# set terminal and menu
+set $term tilix
+set $menu rofi -show drun -modi drun -line-padding 4 -hide-scrollbar -show-icons
+
+# wallpaper
+# output * background ~/.config/backgrounds/debdino.png fill
+output * background ~/.config/backgrounds/wallhaven-zyj28v_3440x1440.png fill
+
+# shortcuts
+bindsym $mod+t exec $term
+bindsym $mod+Space exec $menu
+bindsym $mod+n exec swaync-client -t -sw
+bindsym $mod+e exec thunar
+bindsym $mod+f exec firefox
+
+
+# rules
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="galculator"] floating enable
+for_window [app_id="kitty"] floating enable, resize set 1280 720
+for_window [app_id="nwg-look"] floating enable
+for_window [app_id="vlc"] floating enable, resize set 1280 720
+for_window [app_id="qimgv"] floating enable, resize set 1280 720
+
+# windows
+bindsym $mod+q kill
+bindsym $mod+Shift+r reload; exec notify-send 'sway' 'Restarted'
+bindsym $mod+Shift+q exit
+
+# move focus
+bindsym $mod+Left focus left
+bindsym $mod+Right focus right
+bindsym $mod+Up focus up
+bindsym $mod+Down focus down
+
+# move window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Down move down
+
+# resize window
+bindsym $mod+Ctrl+Left resize shrink width 20px
+bindsym $mod+Ctrl+Right resize grow width 20px
+
+# audio
+bindsym $mod+Insert exec ~/scripts/changevolume up
+bindsym $mod+Delete exec ~/scripts/changevolume down
+bindsym $mod+m exec ~/scripts/changevolume mute
+
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+#
+# Screen Capture
+bindsym Print exec grim ~/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png; exec notify-send 'Grim' 'Image saved to ~/Screenshots'
+bindsym $mod+Print exec grim -g "$(slurp)" ~/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png; exec notify-send 'Grim' 'Selected image saved to ~/Screenshots'
+
+### Gaps
+gaps inner 16
+gaps outer 1
+default_border pixel 3
+
+### Borders
+client.focused          #bd93f9 #bd93f9 #282a36 #bd93f9 #bd93f9
+client.focused_inactive #282a36 #282a36 #bd93f9 #282a36 #282a36
+client.unfocused        #282a36 #282a36 #bd93f9 #282a36 #282a36
+client.urgent           #ff5555 #ff5555 #282a36 #ff5555 #ff5555
+client.placeholder      #282a36 #282a36 #bd93f9 #282a36 #282a36
+client.background       #282a36
+
+bar { 
+     swaybar_command waybar
+     }
+#GTK issue
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
